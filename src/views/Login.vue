@@ -6,11 +6,21 @@
     <div class="logo">
       <span class="iconfont iconnew"></span>
     </div>
+    <!-- 3.渲染 -->
+    <authInput></authInput>
   </div>
 </template>
 
 <script>
-export default {};
+// 1.引入单文件组件 import authInput引入组件对象
+import authInput from "@/components/AuthInput.vue";
+export default {
+  // 2.注册子组件
+  components: {
+    authInput
+    // Key是组件名 value 是组件对象 同名可缩写
+  }
+};
 </script>
 
 <style lang='less'>
