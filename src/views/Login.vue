@@ -7,7 +7,9 @@
       <span class="iconfont iconnew"></span>
     </div>
     <!-- 3.渲染 -->
-    <authInput></authInput>
+    <!-- type placeholder 传递属性 -->
+    <authInput type="text" placeholder="用户名/邮箱"></authInput>
+    <authInput type="password" placeholder="密码"></authInput>
   </div>
 </template>
 
@@ -34,11 +36,12 @@ export default {
 .logo {
   text-align: center;
   span {
+    margin-bottom: 24px;
     font-size: 35vw;
     color: #ff5c67;
   }
 }
-.main {
+body {
   background-color: #f2f2f2;
 }
 </style>
