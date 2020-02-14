@@ -8,8 +8,8 @@
       :placeholder="placeholder"
       @input="testVlaue"
       :class="{
-      error:isValid,
-      success:!isValid
+      error:!isValid,
+      success:isValid
       
     }"
     />
@@ -51,11 +51,11 @@ export default {
     box-sizing: border-box;
     border-radius: 5px;
   }
-}
-.error {
-  border-color: red;
-}
-.success {
-  border-color: #000;
+  .error {
+    border-color: red;
+  }
+  .success {
+    border-color: #000;
+  }
 }
 </style>
