@@ -24,10 +24,10 @@ export default {
     };
   },
   // export default 的用法：相当于提供一个接口给外界，让其他文件通过 import 来引入使用。
-  props: ["type", "placeholder"],
+  props: ["type", "placeholder", "rule"],
   methods: {
     testVlaue(event) {
-      const regExp = /^.{4,16}$/;
+      const regExp = new RegExp(this.rule);
       // console.log("输入框的值发生了变化", event.target.value);
       this.isValid = regExp.test(event.target.value);
       console.log(this.isValid);

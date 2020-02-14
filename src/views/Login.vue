@@ -8,8 +8,8 @@
     </div>
     <!-- 3.渲染 -->
     <!-- type placeholder 传递属性 -->
-    <authInput type="text" placeholder="用户名/邮箱"></authInput>
-    <authInput type="password" placeholder="密码"></authInput>
+    <authInput type="text" placeholder="用户名/邮箱" rule="^.{4,16}$"></authInput>
+    <authInput type="password" placeholder="密码" rule="^[a-zA-Z0-9]{6,18}$"></authInput>
   </div>
 </template>
 
