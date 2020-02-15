@@ -8,20 +8,34 @@
     </div>
     <!-- 3.渲染 -->
     <!-- type placeholder 传递属性 -->
-    <authInput type="text" placeholder="用户名/邮箱" rule="^.{4,16}$"></authInput>
-    <authInput type="password" placeholder="密码" rule="^[a-zA-Z0-9]{6,18}$"></authInput>
+    <authInput type="text" placeholder="用户名/邮箱" rule="^.{4,16}$" errMsg="请输入正确的用户名"></authInput>
+
+    <authInput type="password" placeholder="密码" rule="^[a-zA-Z0-9]{6,18}$" errMsg="请输入正确的密码"></authInput>
+
+    <pageBtn 
+      btnText="登录"
+      @clickBtn='login'
+    ></pageBtn>
   </div>
 </template>
 
 <script>
 // 1.引入单文件组件 import authInput引入组件对象
 import authInput from "@/components/AuthInput.vue";
+import pageBtn from "../components/pageBtn.vue";
+
 export default {
   // 2.注册子组件
   components: {
-    authInput
     // Key是组件名 value 是组件对象 同名可缩写
-  }
+    authInput,
+    pageBtn
+  },
+  methods: {
+    login(){
+      console.log('父组件监听到了子组件传递过来的事件')
+    }
+  },
 };
 </script>
 
