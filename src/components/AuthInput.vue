@@ -37,7 +37,8 @@ export default {
     },
     errAlert() {
       if (!this.isValid) {
-        alert(this.errMsg);
+        // alert(this.errMsg);
+        this.$toast(this.errMsg)
       }
     }
   }
