@@ -6,6 +6,7 @@
     <input
       :type="type"
       :placeholder="placeholder"
+      @blur="errAlert"
       @input="testVlaue"
       :class="{
       error:!isValid,
@@ -24,13 +25,20 @@ export default {
     };
   },
   // export default 的用法：相当于提供一个接口给外界，让其他文件通过 import 来引入使用。
-  props: ["type", "placeholder", "rule"],
+  props: ["type", "placeholder", "rule", "errMsg"],
   methods: {
     testVlaue(event) {
       const regExp = new RegExp(this.rule);
       // console.log("输入框的值发生了变化", event.target.value);
       this.isValid = regExp.test(event.target.value);
-      console.log(this.isValid);
+      // console.log(this.isValid);
+      // 第二个参数就是要传递的数据,可以被父组件接收到
+      this.$emit('changeVlaue',event.target.value)
+    },
+    errAlert() {
+      if (!this.isValid) {
+        alert(this.errMsg);
+      }
     }
   }
 };
