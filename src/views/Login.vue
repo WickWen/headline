@@ -52,7 +52,14 @@ export default {
   methods: {
     login(){
       // console.log('父组件监听到了子组件传递过来的事件')
-      console.log('点击按钮后,用户名是'+this.username,'密码是'+this.password)
+      console.log('点击按钮后,用户名是'+this.username,'密码是'+this.password);
+
+      this.$axios({
+        url:'http://127.0.0.1:3000/post',
+        method:'get',
+      }).then(res=>{
+        console.log(res)
+      })
     },
     setUserName(username){
       // console.log('父组件接收到了数据,先存在自己的data当中')
