@@ -8,26 +8,23 @@
     </div>
     <!-- 3.渲染 -->
     <!-- type placeholder 传递属性 -->
-    <authInput 
-      type="text" 
-      placeholder="用户名/邮箱" 
-      rule="^.{4,16}$" 
+    <authInput
+      type="text"
+      placeholder="用户名/邮箱"
+      rule="^.{4,16}$"
       errMsg="请输入正确的用户名"
-      @changeVlaue='setUserName'
+      @changeVlaue="setUsername"
     ></authInput>
 
-    <authInput 
-      type="password" 
-      placeholder="密码" 
-      rule="^[a-zA-Z0-9]{6,18}$" 
+    <authInput
+      type="password"
+      placeholder="密码"
+      rule="^[a-zA-Z0-9]{3,18}$"
       errMsg="请输入正确的密码"
-      @changeVlaue='setPassWord'
+      @changeVlaue="setPassword"
     ></authInput>
 
-    <pageBtn 
-      btnText="登录"
-      @clickBtn='login'
-    ></pageBtn>
+    <pageBtn btnText="登录" @clickBtn="login"></pageBtn>
   </div>
 </template>
 
@@ -39,9 +36,9 @@ import pageBtn from "../components/pageBtn.vue";
 export default {
   data() {
     return {
-      username:'',
-      password:''
-    }
+      username: "",
+      password: ""
+    };
   },
   // 2.注册子组件
   components: {
@@ -50,25 +47,44 @@ export default {
     pageBtn
   },
   methods: {
-    login(){
-      // console.log('父组件监听到了子组件传递过来的事件')
-      console.log('点击按钮后,用户名是'+this.username,'密码是'+this.password);
+    setUsername(username) {
+      // console.log('父组件接收到了数据,先存在自己的data当中')
+      this.username = username;
+    },
+    setPassword(password) {
+      this.password = password;
+    },
+    login() {
+      console.log("父组件监听到了子组件传递过来的事件");
+      if (!this.username || !this.password) {
+        this.$toast("你的用户名或密码不正确,请重新输入");
+        return;
+      }
 
       this.$axios({
-        url:'http://127.0.0.1:3000/post',
-        method:'get',
-      }).then(res=>{
-        console.log(res)
+        url: "http://127.0.0.1:3000/login",
+        method: "post",
+        data: {
+          username: this.username,
+          password: this.password
+        }
       })
-    },
-    setUserName(username){
-      // console.log('父组件接收到了数据,先存在自己的data当中')
-      this.username=username
-    },
-    setPassWord(password){
-      this.password=password
+        .then(res => {
+          // console.log(res.data);
+          const { statusCode, message } = res.data;
+          if (statusCode == 200 && message) {
+            this.$toast.success(message);
+          }
+        })
+        .catch(err => {
+          console.dir(err);
+          this.$toast.fail(err.response.data.message || "系统错误");
+        });
+      // err=>{
+      //   console.log(err);
+      // }
     }
-  },
+  }
 };
 </script>
 
