@@ -19,7 +19,7 @@
       type="text" 
       placeholder="昵称" 
       rule=".{3,18}$" 
-      errMsg="请输入不合法"
+      errMsg="请输入合法信息"
       @changeVlaue="setNickname"
     ></authInput>
 
@@ -67,6 +67,11 @@ export default {
       this.nickname = nickname;
     },
     register(){
+      if (!this.username || !this.password || !this.nickname) {
+        this.$toast("请输入完整信息");
+        return;
+      }
+
       this.$axios({
         url:"http://127.0.0.1:3000/register",
         method:'post',
@@ -77,7 +82,14 @@ export default {
         }
       }).then(res=>{
         console.log(res.data);
-
+        const { statusCode, message } = res.data;
+          if (statusCode) {
+            this.$toast.fail(message);
+          } else {
+            this.$toast.success(message);
+          }
+      }).catch(err=>{
+        this.$toast.fail("系统错误");
       })
 
     }
