@@ -19,7 +19,7 @@
     <authInput
       type="password"
       placeholder="密码"
-      rule="^[a-zA-Z0-9]{3,18}$"
+      rule="^.{3,18}$"
       errMsg="请输入正确的密码"
       @changeVlaue="setPassword"
     ></authInput>
@@ -86,7 +86,7 @@ export default {
 };
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>
 .closeBtn {
   padding: 6.389vw;
   span {
