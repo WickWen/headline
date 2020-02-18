@@ -70,19 +70,17 @@ export default {
         }
       })
         .then(res => {
-          // console.log(res.data);
           const { statusCode, message } = res.data;
-          if (statusCode == 200 && message) {
+          if (statusCode) {
+            this.$toast.fail(message);
+          } else {
             this.$toast.success(message);
           }
         })
         .catch(err => {
-          console.dir(err);
-          this.$toast.fail(err.response.data.message || "系统错误");
+          // 这里做一个防御性编程
+          this.$toast.fail("系统错误");
         });
-      // err=>{
-      //   console.log(err);
-      // }
     }
   }
 };
