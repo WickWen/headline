@@ -5,6 +5,8 @@
     <router-link to="/login">登录页</router-link>
     <br />
     <router-link to="/register">注册页</router-link>
+    <br />
+    <router-link to="/profile">个人中心页</router-link>
   </div>
 </template>
 
