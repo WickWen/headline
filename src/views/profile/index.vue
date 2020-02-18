@@ -13,12 +13,40 @@
               <span class="iconfont iconjiantou1"></span>
           </div>
       </div>
-      <div class="List"></div>
+      <div class="ListVue">
+          <TabBar
+              leftText='我的关注'
+              rightText='关注的用户'
+          ></TabBar>
+          
+          <TabBar
+              leftText='我的跟帖'
+              rightText='跟帖/回复'
+          ></TabBar>
+
+          <TabBar
+              leftText='我的收藏'
+              rightText='文字/视频'
+          ></TabBar>
+
+          <TabBar
+              leftText='设置'
+              rightText=''
+          ></TabBar>
+
+          
+
+
+      </div>
   </div>
 </template>
 
 <script>
+import TabBar from '@/components/TabBar.vue'
 export default {
+    components:{
+        TabBar
+    }
 
 }
 </script>
