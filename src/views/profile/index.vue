@@ -23,6 +23,8 @@
       <TabBar leftText="我的收藏" rightText="文字/视频"></TabBar>
 
       <TabBar leftText="设置" rightText></TabBar>
+
+      <button @click='logout'>退出登录</button>
     </div>
   </div>
 </template>
@@ -39,6 +41,16 @@ export default {
     return {
       userData: {}
     };
+  },
+  methods: {
+      logout(){
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+        // replace会替换最后的路由
+        this.$router.replace({
+            path:'/login'
+        })
+      }
   },
   mounted() {
     this.$axios({
