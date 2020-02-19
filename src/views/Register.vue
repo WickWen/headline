@@ -73,7 +73,7 @@ export default {
       }
 
       this.$axios({
-        url:"http://127.0.0.1:3000/register",
+        url:"/register",
         method:'post',
         data:{
           username: this.username,
@@ -81,13 +81,10 @@ export default {
           nickname: this.nickname
         }
       }).then(res=>{
-        console.log(res.data);
         const { statusCode, message } = res.data;
-          if (statusCode) {
-            this.$toast.fail(message);
-          } else {
+          if (!statusCode) {
             this.$toast.success(message);
-          }
+          } 
       }).catch(err=>{
         this.$toast.fail("系统错误");
       })

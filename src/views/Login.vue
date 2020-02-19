@@ -62,7 +62,7 @@ export default {
       }
 
       this.$axios({
-        url: "http://127.0.0.1:3000/login",
+        url: "/login",
         method: "post",
         data: {
           username: this.username,
@@ -71,10 +71,16 @@ export default {
       })
         .then(res => {
           const { statusCode, message } = res.data;
-          if (statusCode) {
-            this.$toast.fail(message);
-          } else {
+          if (!statusCode) {
             this.$toast.success(message);
+            const { data } = res.data;
+            // 把登录状态保存到本地储存
+            localStorage.setItem('token',data.token)
+            localStorage.setItem('userId',data.user.id)
+            // 编程式导航
+            this.$router.push({
+              path: "/"
+            });
           }
         })
         .catch(err => {

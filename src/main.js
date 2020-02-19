@@ -4,6 +4,21 @@ import router from './router'
 import axios from "axios";
 // 绑定到原型
 Vue.prototype.$axios = axios;
+// 设置基准路径
+axios.defaults.baseURL = 'http://127.0.0.1:3000'
+import { Toast } from 'vant';
+Vue.use(Toast);
+// 拦截器设置
+axios.interceptors.response.use(res => {
+  const { statusCode, message } = res.data;
+  const errorRegexp = /^4\d\d$/
+  if (statusCode && errorRegexp.test(statusCode)) {
+    Toast.fail(message || '系统错误');
+  }
+  // 先拦截 再返回响应数据
+  return res;
+})
+
 
 //引入组件库
 import Vant from 'vant';
