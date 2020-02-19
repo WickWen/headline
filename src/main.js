@@ -16,8 +16,13 @@ import 'vant/lib/index.css';
 router.beforeEach((to, from, next) => {
   // console.log('拦截路由跳转');
   const token = localStorage.getItem('token')
-
-  if (to.path == '/profile') {
+  
+  const AuthPage = [
+    '/profile',
+    '/editprofile',
+  ]
+  // 查找 to.path 存在于数组的索引上,如不存在返回-1
+  if (AuthPage.indexOf(to.path)>-1) {
     if (token) {
       return next()
 
@@ -42,7 +47,7 @@ Vue.use(Toast);
 axios.interceptors.response.use(res => {
   const { statusCode, message } = res.data;
   const errorRegexp = /^4\d\d$/
-  
+
   if (statusCode && errorRegexp.test(statusCode)) {
     Toast.fail(message || '系统错误');
   }
