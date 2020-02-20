@@ -1,20 +1,22 @@
 <template>
   <div class="main" v-if="userData">
-    <div class="profileTop">
-        <img v-if="userData.head_img" :src="$axios.defaults.baseURL+userData.head_img" alt="" class="picture">
-        <img v-else src="@/assets/moren.jpg" alt="" class="picture">
-      <div class="profilemid">
-        <div class="name">
-          <span v-if="userData.gender == 1" class="iconfont iconxingbienan"></span>
-          <span v-else class="iconfont iconxingbienv"></span>
-          {{userData.nickname}}
+    <router-link to="/editprofile">
+        <div class="profileTop">
+            <img v-if="userData.head_img" :src="$axios.defaults.baseURL+userData.head_img" alt="" class="picture">
+            <img v-else src="@/assets/moren.jpg" alt="" class="picture">
+          <div class="profilemid">
+            <div class="name">
+              <span v-if="userData.gender == 1" class="iconfont iconxingbienan"></span>
+              <span v-else class="iconfont iconxingbienv"></span>
+              {{userData.nickname}}
+            </div>
+            <div class="date">{{(''+userData.create_date).split("T")[0]}}</div>
+          </div>
+          <div class="arrow">
+            <span class="iconfont iconjiantou1"></span>
+          </div>
         </div>
-        <div class="date">{{(''+userData.create_date).split("T")[0]}}</div>
-      </div>
-      <div class="arrow">
-        <span class="iconfont iconjiantou1"></span>
-      </div>
-    </div>
+    </router-link>
     <div class="ListVue">
       <TabBar leftText="我的关注" rightText="关注的用户"></TabBar>
 
