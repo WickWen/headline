@@ -1,5 +1,5 @@
 <template>
-  <div class="Listmain">
+  <div class="Listmain" @click="handleClick">
       <div class="leftText">
         {{leftText}}
       </div>
@@ -14,8 +14,14 @@
 
 <script>
 export default {
-  props:['leftText','rightText']
+  props:['leftText','rightText'],
+  methods: {
+    handleClick(){
+      console.log('点击长条组件触发事件')
+      this.$emit('handleClick')
 
+    }
+  }
 }
 </script>
 
