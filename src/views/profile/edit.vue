@@ -32,7 +32,7 @@
     v-model="isshowNickname" 
     title="修改昵称" 
     show-cancel-button
-    @confirm='confirmNickname'>
+    @confirm='UserProfile({nickname:nickname})'>
       <van-field v-model="nickname" placeholder="请输入昵称" />
     </van-dialog>
 
@@ -40,7 +40,7 @@
     v-model="isshowPassword" 
     title="修改密码" 
     show-cancel-button
-    @confirm='confirmPassword'>
+    @confirm='UserProfile({password:password})'>
       <van-field v-model="password" type="password" placeholder="请输入密码" />
     </van-dialog>
   </div>
@@ -83,34 +83,18 @@ export default {
     })
 
     },
-    confirmNickname(){
+    UserProfile(newData){
       this.$axios({
         url:'/user_update/'+localStorage.getItem('userId'),
         method:'post',
+        data: newData,
         headers:{
           Authorization:localStorage.getItem('token')
-        },
-        data:{
-          nickname:this.nickname
         }
       }).then(res=>{
         console.log(res);
         // 2.每当修改资料之后都要重新加载数据
         this.loadPage();       
-      })
-    },
-    confirmPassword(){
-      this.$axios({
-        url:'/user_update/'+localStorage.getItem('userId'),
-        method:'post',
-        headers:{
-          Authorization:localStorage.getItem('token'),
-        },
-        data:{
-          password:this.password
-        }
-      }).then(res=>{
-        this.loadPage();
       })
     }
     //   可优化
