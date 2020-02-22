@@ -26,7 +26,15 @@
     <TabBar 
     leftText="性别" 
     :rightText="userData.gender==1?'男':'女'"
+    @handleClick='showGender = true'
     ></TabBar>
+
+    <van-action-sheet 
+    v-model="showGender" 
+    :actions="actions" 
+    @select="onSelect" 
+    cancel-text="取消"
+    close-on-click-action/>
 
     <van-dialog 
     v-model="isshowNickname" 
@@ -59,8 +67,17 @@ export default {
       userData: null,
       isshowNickname: false,
       isshowPassword: false,
+      showGender: false,
       nickname:'',
-      password:''
+      password:'',
+      actions:[
+        {
+          name: '男', color: '#00ade9'
+        },
+        {
+          name: '女', color: '#e50053'
+        }
+      ]
     };
   },
   mounted() {
@@ -96,13 +113,21 @@ export default {
         // 2.每当修改资料之后都要重新加载数据
         this.loadPage();       
       })
+    },
+    onSelect(item) {
+      this.UserProfile({
+        gender: item.name == '男'? 1 :0
+      })
+      // this.showGender = false ;
+      // 可以通过 close-on-click-action 属性开启自动收起
     }
+  }
     //   可优化
     //   showNickname(){
     //       this.isshowNickname = true;
     //   }
-  },
-};
+  
+}
 </script>
 
 <style lang="less" scoped>
