@@ -1,6 +1,9 @@
 <template>
   <div v-if="userData">
+    <!-- 顶部头部组件 -->
     <Header title="编辑资料"></Header>
+
+    <!-- 头像部分 -->
     <div class="Avatar">
       <img
         v-if="userData.head_img"
@@ -9,13 +12,21 @@
         class="icon"
       />
       <img v-else src="@/assets/moren.jpg" alt class="icon" />
+
+      <div class="uploader">
+        <van-uploader :after-read="afterRead" />
+        <!-- :before-read="beforeRead"  --> 
+        <!-- v-model="fileList" multiple  -->
+      </div>
     </div>
+
+  <!-- 条形组件部分 -->
     <TabBar 
     leftText="昵称" 
     :rightText="userData.nickname"
     @handleClick='isshowNickname = true' 
     ></TabBar>
-   <!-- 直接添加到监听事件 -->
+    <!-- 直接添加到监听事件 -->
 
     <TabBar 
     leftText="密码" 
@@ -29,10 +40,7 @@
     @handleClick='showGender = true'
     ></TabBar>
 
-    <van-uploader :after-read="afterRead" v-model="fileList" multiple />
-    <!-- :before-read="beforeRead"  -->
     
-
     <van-action-sheet 
     v-model="showGender" 
     :actions="actions" 
@@ -82,17 +90,17 @@ export default {
           name: '女', color: '#e50053'
         }
       ],
-      fileList: [
-        { url: 'https://img.yzcdn.cn/vant/leaf.jpg',
-          status: 'uploading',
-          message: '上传中...' },
+      // fileList: [
+      //   { url: 'https://img.yzcdn.cn/vant/leaf.jpg',
+      //     status: 'uploading',
+      //     message: '上传中...' },
         // Uploader 根据文件后缀来判断是否为图片文件
         // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
         // { url: 'https://cloud-image', 
         //   isImage: true,
         //   status: 'failed',
         //   message: '上传失败' }
-      ]
+      // ]
     };
   },
   mounted() {
@@ -146,10 +154,11 @@ export default {
     afterRead(fileObj){
       console.log('图片读取完毕');
       console.log(fileObj.file);
-      // 将图片转换成file作为键名的一个FormData 对象
+      // 1.将图片转换成file作为键名的一个FormData 对象
       var formData = new FormData()
-      // 接收的两个参数,第一个是字段名(地址),参考API文档 ,第二个这是文件本身
+      // 接收的两个参数,第一个是字段名,第二个这是文件本身
       formData.append('file',fileObj.file)    /* 数据处理完毕 */
+      // 2.根据 api 发送请求 图片在线地址
       this.$axios({
         url:'/upload',
         method:'post',
@@ -157,7 +166,6 @@ export default {
           Authorization:localStorage.getItem('token')
         },
         data: formData
-
       }).then(res=>{
         console.log(res.data);
         const { data } = res.data;
@@ -179,10 +187,22 @@ export default {
 .Avatar {
   padding: 6.667vw 0;
   text-align: center;
+  position: relative;
   .icon {
     width: 19.444vw;
     height: 19.444vw;
     border-radius: 50%;
+  }
+  .uploader{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
   }
 }
 </style>
