@@ -29,6 +29,10 @@
     @handleClick='showGender = true'
     ></TabBar>
 
+    <van-uploader :after-read="afterRead" v-model="fileList" multiple />
+    <!-- :before-read="beforeRead"  -->
+    
+
     <van-action-sheet 
     v-model="showGender" 
     :actions="actions" 
@@ -77,6 +81,17 @@ export default {
         {
           name: '女', color: '#e50053'
         }
+      ],
+      fileList: [
+        { url: 'https://img.yzcdn.cn/vant/leaf.jpg',
+          status: 'uploading',
+          message: '上传中...' },
+        // Uploader 根据文件后缀来判断是否为图片文件
+        // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+        // { url: 'https://cloud-image', 
+        //   isImage: true,
+        //   status: 'failed',
+        //   message: '上传失败' }
       ]
     };
   },
@@ -120,6 +135,36 @@ export default {
       })
       // this.showGender = false ;
       // 可以通过 close-on-click-action 属性开启自动收起
+    },
+    // beforeRead(fileObj) {
+    //   if (file.type !== 'image/jpeg/png') {    ??
+    //     this.$toast.fail('请上传 jpg/png 格式图片');
+    //     return false;
+    //   }
+    //   return true;
+    // },
+    afterRead(fileObj){
+      console.log('图片读取完毕');
+      console.log(fileObj.file);
+      // 将图片转换成file作为键名的一个FormData 对象
+      var formData = new FormData()
+      // 接收的两个参数,第一个是字段名(地址),参考API文档 ,第二个这是文件本身
+      formData.append('file',fileObj.file)    /* 数据处理完毕 */
+      this.$axios({
+        url:'/upload',
+        method:'post',
+        headers:{
+          Authorization:localStorage.getItem('token')
+        },
+        data: formData
+
+      }).then(res=>{
+        console.log(res.data);
+        const { data } = res.data;
+        console.log(this.$axios.defaults.baseURL + data.url);
+        
+      })
+      
     }
   }
     //   可优化
