@@ -101,9 +101,6 @@ export default {
       this.$axios({
       url: "/user/" + localStorage.getItem("userId"),
       method: "get",
-      headers: {
-        Authorization: localStorage.getItem("token")
-      }
     }).then(res => {
       const { data } = res.data;
       if (data) {
@@ -117,9 +114,6 @@ export default {
         url:'/user_update/'+localStorage.getItem('userId'),
         method:'post',
         data: newData,
-        headers:{
-          Authorization:localStorage.getItem('token')
-        }
       }).then(res=>{
         console.log(res);
         // 2.每当修改资料之后都要重新加载数据
@@ -151,9 +145,6 @@ export default {
       this.$axios({
         url:'/upload',
         method:'post',
-        headers:{
-          Authorization:localStorage.getItem('token')
-        },
         data: formData
       }).then(res=>{
         console.log(res.data);
